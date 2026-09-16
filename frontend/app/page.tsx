@@ -1,69 +1,147 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
+import { getProducts, getCategories } from "@/lib/api";
+import ProductCard from "@/components/ProductCard";
+import SearchBar from "@/components/SearchBar";
+import FilterBar from "@/components/FilterBar";
+
+interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  category: string;
+  image: string;
+  stock: number;
+}
 
 export default function Home() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedSort, setSelectedSort] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const loadCategories = async () => {
+      try {
+        const res = await getCategories();
+        setCategories(res.data);
+      } catch {
+        console.error("Failed to load categories");
+      }
+    };
+    loadCategories();
+  }, []);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      setError("");
+      try {
+        const params: Record<string, string> = {};
+        if (search) params.search = search;
+        if (selectedCategory) params.category = selectedCategory;
+        if (selectedSort) params.sort = selectedSort;
+
+        const res = await getProducts(params);
+        setProducts(res.data.products);
+      } catch {
+        setError("Something went wrong. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const delay = setTimeout(() => {
+      fetchProducts();
+    }, 300);
+
+    return () => clearTimeout(delay);
+  }, [search, selectedCategory, selectedSort]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <div className="`max-w-screen-xl` mx-auto px-8 py-8">
+      {/* Hero Header */}
+      <div className="flex items-end justify-between mb-6">
+        <div>
+          <p className="text-[11px] tracking-[0.2em] text-[#767676] mb-1">
+            COLLECTION
+          </p>
+          <h1 className="font-editorial text-6xl font-light text-black leading-none">
+            New In
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+        </div>
+        <SearchBar value={search} onChange={setSearch} />
+      </div>
+
+      {/* Filters */}
+      <div className="mb-6">
+        <FilterBar
+          categories={categories}
+          selectedCategory={selectedCategory}
+          selectedSort={selectedSort}
+          onCategoryChange={setSelectedCategory}
+          onSortChange={setSelectedSort}
+        />
+      </div>
+
+      {/* Item Count */}
+      {!loading && !error && (
+        <p className="text-[11px] tracking-[0.15em] text-[#767676] mb-6">
+          {products.length} ITEMS
+        </p>
+      )}
+
+      {/* Loading Skeleton */}
+      {loading && (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-10">
+          {[...Array(6)].map((_, i) => (
+            <div key={i}>
+              <div
+                className="w-full bg-[#F5F5F5] animate-pulse"
+                style={{ aspectRatio: "3/4" }}
+              />
+              <div className="mt-3 h-3 w-32 bg-[#F5F5F5] animate-pulse" />
+              <div className="mt-2 h-3 w-20 bg-[#F5F5F5] animate-pulse" />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Error */}
+      {!loading && error && (
+        <div className="py-24 text-center">
+          <p className="text-sm text-[#767676]">{error}</p>
+          <button
+            onClick={() => setSearch((prev) => prev + "")}
+            className="mt-6 text-[11px] tracking-[0.15em] border border-black px-8 py-3 hover:bg-black hover:text-white transition-colors"
+          >
+            TRY AGAIN
+          </button>
+        </div>
+      )}
+
+      {/* Empty */}
+      {!loading && !error && products.length === 0 && (
+        <div className="py-24 text-center">
+          <p className="text-sm text-black">No results found</p>
+          <p className="text-[11px] `tracking-[0.1em]` text-[#767676] mt-2">
+            Try a different search or category
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      )}
+
+      {/* Products Grid */}
+      {!loading && !error && products.length > 0 && (
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-10">
+          {products.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
         </div>
-      </main>
+      )}
     </div>
   );
 }

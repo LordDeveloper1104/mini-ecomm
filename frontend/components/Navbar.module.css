@@ -1,0 +1,50 @@
+.header {
+  background-color: white;
+  border-bottom: 1px solid #E8E8E8;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  height: 3.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: black;
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.navLink {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: black;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.navLink:hover {
+  color: #767676;
+}
+
+.bagCount {
+  margin-left: 0.25rem;
+  color: #767676;
+}

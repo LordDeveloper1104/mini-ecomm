@@ -1,0 +1,106 @@
+.wrap {
+  display: flex;
+  gap: 1.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.imageWrap {
+  position: relative;
+  width: 48px;
+  padding: 0.5rem;
+  flex-shrink: 0;
+  background-color: #F5F5F5;
+  aspect-ratio: 3/4;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.infoWrap {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.category {
+  font-size: 18px;
+  letter-spacing: 0.15em;
+  color: #767676;
+}
+
+.name {
+  font-size: 0.875rem;
+  color: black;
+  margin-top: 0.125rem;
+  line-height: 1.25;
+}
+
+.price {
+  font-size: 0.875rem;
+  color: black;
+  flex-shrink: 0;
+}
+
+.actionsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.qtyBox {
+  display: flex;
+  align-items: center;
+  border: 1px solid #E8E8E8;
+}
+
+.qtyBtn {
+  width: 2rem;
+  height: 2rem;
+  color: black;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.qtyBtn:hover {
+  background-color: #F5F5F5;
+}
+
+.qtyValue {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  color: black;
+}
+
+.removeBtn {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: #767676;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.removeBtn:hover {
+  color: black;
+}

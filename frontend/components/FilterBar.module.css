@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #E8E8E8;
+  border-bottom: 1px solid #E8E8E8;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
+.categoriesWrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.tabBtn {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  padding-bottom: 0.125rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.activeTab {
+  color: black;
+  border-bottom: 1px solid black;
+}
+
+.inactiveTab {
+  color: #767676;
+}
+
+.inactiveTab:hover {
+  color: black;
+}
+
+.selectBox {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: black;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}

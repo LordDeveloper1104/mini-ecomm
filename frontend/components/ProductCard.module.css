@@ -1,0 +1,131 @@
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background-color: #f5f5f5;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.imageWrap:hover .image {
+  transform: scale(1.03);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color 0.2s ease;
+}
+
+.imageWrap:hover .overlay {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.addBtnWrap {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.imageWrap:hover .addBtnWrap {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.addBtn {
+  width: 100%;
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  padding: 0.625rem 1rem;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.addBtn:hover {
+  background-color: black;
+  color: white;
+}
+
+.addBtnAdded {
+  background-color: black !important;
+  color: white !important;
+}
+
+.addBtnError {
+  background-color: #ffebee !important;
+  color: #c62828 !important;
+  border-color: #c62828 !important;
+  font-size: 10px;
+}
+
+.soldOutOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.soldOutLabel {
+  background-color: black;
+  color: white;
+  padding: 0.375rem 0.75rem;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  font-weight: 500;
+}
+
+.info {
+  margin-top: 0.75rem;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.name {
+  font-size: 0.875rem;
+  color: black;
+  text-decoration: none;
+  line-height: 1.25;
+}
+
+.name:hover {
+  text-decoration: underline;
+}
+
+.category {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: #767676;
+  margin-top: 0.125rem;
+  text-transform: uppercase;
+}
+
+.price {
+  font-size: 0.875rem;
+  color: black;
+  flex-shrink: 0;
+}

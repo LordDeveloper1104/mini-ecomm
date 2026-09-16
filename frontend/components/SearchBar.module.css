@@ -1,0 +1,35 @@
+.container {
+  position: relative;
+}
+
+.input {
+  width: 12rem;
+  border-bottom: 1px solid black;
+  background-color: transparent;
+  padding-bottom: 0.25rem;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: black;
+  outline: none;
+}
+
+.input::placeholder {
+  color: #767676;
+}
+
+.clearBtn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: #767676;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.clearBtn:hover {
+  color: black;
+}

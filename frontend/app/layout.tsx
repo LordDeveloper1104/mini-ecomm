@@ -1,19 +1,37 @@
-import { Inter } from "next/font/google";
-import type { ReactNode } from "react";
+import type { Metadata } from "next";
+import { Inter, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import { CartProvider } from "@/context/CartContext";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+});
 
-export const metadata = {
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-cormorant",
+});
+
+export const metadata: Metadata = {
   title: "ShopNow",
   description: "A simple e-commerce store",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <main className="max-w-7xl mx-auto px-4 py-6">{children}</main>
+      <body className={`${inter.variable} ${cormorant.variable} font-sans`}>
+        <CartProvider>
+          <Navbar />
+          <main>{children}</main>
+        </CartProvider>
       </body>
     </html>
   );
